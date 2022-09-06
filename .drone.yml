@@ -147,30 +147,6 @@ steps:
     CGO_ENABLED: '0'
   commands:
   - go build -v -ldflags "-X main.version=" -a -tags netgo -o release/windows/amd64/drone-sftp.exe .
-- name: docker
-  image: plugins/docker
-  settings:
-    dockerfile: docker/Dockerfile.windows.1809
-    repo: plugins/sftp
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    auto_tag: true
-    auto_tag_suffix: windows-1809-amd64
-    daemon_off: true
-    purge: false
-  volumes:
-  - name: docker_pipe
-    path: \\\\.\\pipe\\docker_engine
-  when:
-    ref:
-    - refs/heads/master
-    - refs/tags/**
-volumes:
-- name: docker_pipe
-  host:
-    path: \\\\.\\pipe\\docker_engine
 depends_on:
 - testing
 trigger:
