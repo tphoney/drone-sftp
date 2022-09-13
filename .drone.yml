@@ -28,11 +28,12 @@ steps:
 volumes:
 - name: gopath
   temp: {}
+
 trigger:
   ref:
   - refs/heads/master
-  - refs/tags/**
-  - refs/pull/**
+  - "refs/tags/**"
+  - "refs/pull/**"
 
 ---
 kind: pipeline
@@ -73,12 +74,13 @@ steps:
     dry_run: true
 depends_on:
 - testing
+
 trigger:
   ref:
   - refs/heads/master
-  - refs/tags/**
-  - refs/pull/**
-
+  - "refs/tags/**"
+  - "refs/pull/**"
+  
 ---
 kind: pipeline
 type: docker
@@ -118,11 +120,12 @@ steps:
     dry_run: true
 depends_on:
 - testing
+
 trigger:
   ref:
   - refs/heads/master
-  - refs/tags/**
-  - refs/pull/**
+  - "refs/tags/**"
+  - "refs/pull/**"
 
 ---
 kind: pipeline
@@ -194,7 +197,8 @@ depends_on:
 - linux-amd64
 - linux-arm64
 - windows-1809
+
 trigger:
   ref:
   - refs/heads/master
-  - refs/tags/**
+  - "refs/tags/**"
