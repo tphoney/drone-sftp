@@ -70,6 +70,7 @@ steps:
       from_secret: docker_password
     auto_tag: true
     auto_tag_suffix: linux-amd64
+    dry_run: true
 depends_on:
 - testing
 trigger:
@@ -114,6 +115,7 @@ steps:
       from_secret: docker_password
     auto_tag: true
     auto_tag_suffix: linux-arm64
+    dry_run: true
 depends_on:
 - testing
 trigger:
@@ -147,6 +149,18 @@ steps:
     CGO_ENABLED: '0'
   commands:
   - go build -v -ldflags "-X main.version=" -a -tags netgo -o release/windows/amd64/drone-sftp.exe .
+- name: docker
+  image: plugins/docker
+  settings:
+    dockerfile: docker/Dockerfile.windows.1809
+    repo: plugins/sftp
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
+    auto_tag_suffix: windows-amd64
+    dry_run: true
 depends_on:
 - testing
 trigger:
